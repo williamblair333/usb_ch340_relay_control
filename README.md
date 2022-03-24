@@ -7,7 +7,8 @@ This script is intended to do the following:
   
 Connect to specified USB CH340 COM Port and modify its relay using a file.  The file will switch the relay state on a timer in seconds supplied in the file.  The script will loop until EOF.  
   
-The pyserial library is required! --> https://pyserial.readthedocs.io/en/latest/pyserial.html#installation.  python3 -m pip install pyserial
+The pyserial library is required! --> https://pyserial.readthedocs.io/en/latest/pyserial.html#installation.  python3 -m pip install pyserial  
+  
 You may want to check if the serial library is installed.  If it is, remove it.
   
 TODO:  Add parser so we can input all variables on the commandline  
