@@ -3,8 +3,8 @@
 # Bent Gramdal, Feb. 2021
 #
 #READ THE COMMENTS BEFORE RUNNING
-#Run:	    python3 -m ch340_relay_switching
-#File:      ch340_relay_switching.py
+#Run:	    python3 -m ch340_relay_sw --file ch340_seed_file.txt --port COM25  --b 9600  
+#File:      ch340_relay_sw.py
 #Date:      2022MAR24
 #Author:    William Blair
 #Contact:   williamblair333@gmail.com
@@ -24,7 +24,7 @@ import serial
 import time
 #################################################################################
 
-parser = argparse.ArgumentParser(description='Description goes here')
+parser = argparse.ArgumentParser(description='USB ch340 Relay Control with Seed')
 
 parser.add_argument('-f', '--file', type=str, help='Input file goes here' + \
 'file,\t Required', required=True)
@@ -35,14 +35,11 @@ parser.add_argument('-p', '--port', type=str, help='Serial Port Identifier ' + \
 parser.add_argument('-b', '--baud', type=str, help='Serial Port Baud Rate ' + \
 'Confirm before inputting,\t Required', required=True)
 
-parser.add_argument('-l', '--logpath', type=str, help='Teraterm sessions log' + \
-'file location,\t Required', required=True)
-
 args = parser.parse_args()
 
-file_name = (args.file)
-port      = (args.port)
-baud      = (args.baud)
+file_name   = (args.file)
+port        = (args.port)
+baud        = (args.baud)
 
 seed_file   = open(file_name, 'r')
 seed        = seed_file.readlines()
