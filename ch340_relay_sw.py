@@ -3,11 +3,11 @@
 # Bent Gramdal, Feb. 2021
 #
 #READ THE COMMENTS BEFORE RUNNING
-#Run:		python3 -m ch340_relay_switching
+#Run:	    python3 -m ch340_relay_switching
 #File:      ch340_relay_switching.py
 #Date:      2022MAR24
 #Author:    William Blair
-#Contact:	williamblair333@gmail.com
+#Contact:   williamblair333@gmail.com
 #Tested on: Windows 10 21H1
 #
 #This script is intended to do the following:
@@ -44,9 +44,10 @@ file_name = (args.file)
 port      = (args.port)
 baud      = (args.baud)
 
-seed_file = open(file_name, 'r')
-seed = seed_file.readlines()
+seed_file   = open(file_name, 'r')
+seed        = seed_file.readlines()
 serial_port = serial.Serial(port, baud)
+
 onOffStr=['Off','On']
 serial_delay = 0.5
 #################################################################################
