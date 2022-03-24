@@ -16,7 +16,6 @@
 #-the file will switch the relay state on a timer in seconds supplied in the file
 #-the script will loop through the file until EOF
 #-TODO:  Add parser so we can input all variables on the commandline
-#-TODO:  Add OS detection and integrate Linux functionality
 ################################################################################
 
 import threading
