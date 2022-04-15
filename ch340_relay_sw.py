@@ -90,7 +90,6 @@ print('--------------------------------')
 print('USB Serial CH340 - Relay control')
 time.sleep(serial_delay)
 check_status()
-
 #################################################################################
 
 # We need to add some delay. The CH340 only can handle one command at a time
@@ -103,8 +102,10 @@ for delay in seed:
     time.sleep(serial_delay)
     state[0]=1
 
-    print(int(delay) + "seconds delay")
-    time.sleep(int(delay))
+    print(float(delay) + "seconds delay")
+    time.sleep(float(delay))
+    line.delete_line(filename, 0)
+    print("loop")
 #################################################################################
 
 print('Exit..')
