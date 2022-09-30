@@ -6,7 +6,7 @@
 #File:      ch340_relay_tty_control.py
 #Date:      2022SEP29
 #Author:    William Blair
-#Contact:   williamblair333@gmail.com
+#Contact:   william.blair@enersys.com
 #Tested on: Debian GNU/Linux 11
 #This script is intended to do the following:
 #-Control relay from terminal adhoc style or via an input file.  The input file 
@@ -64,9 +64,9 @@ def read_from_port(serial_port):
            chars = serial_port.readline()
            a=chars.split()
            if len(a) == 2:
-               n={b'CH1:':1,b'CH2:':2,b'CH3:':3,b'CH4:':4, b'CH5:':5, b'CH6:':6, b'CH7:':7, b'CH8:':8}.get(a[0],0)
+               n={b'CH1:':0,b'CH2:':1,b'CH3:':2,b'CH4:':3, b'CH5:':4, b'CH6:':5, b'CH7:':6, b'CH8:':7}.get(a[0],0)
                onOff={b'OFF':0,b'ON':1}.get(a[1],0)
-               if n > 0:
+               if n >= 0:
                    print("Relay:",n,"=",onOffStr[onOff])
                    state[n-1]=onOff
            elif len(chars) > 0:
@@ -96,19 +96,23 @@ def relay_msg(relay_number):
 #---------------------------------------------------------------------------------
     
 def relay_off(serial_port, relay_number, state, time_out):
+    relay_msg(relay_number)
+    print("to OFF / Open position", end=" ")
+    print("for", time_out, end=" ")
+    print("seconds.")
     serial_port.write(offMsg[relay_number])
     state[0]=0
-    time.sleep(time_out)
-    relay_msg(relay_number)
-    print("to OFF / Open position")
+    time.sleep(time_out)       
 #---------------------------------------------------------------------------------
 
 def relay_on(serial_port, relay_number, state, time_out):
-    serial_port.write(onMsg[relay_number])
-    state[0]=1
-    time.sleep(time_out)
     relay_msg(relay_number)
     print("to ON / Closed position")
+    print("for", time_out, end=" ")
+    print("seconds.")
+    serial_port.write(onMsg[relay_number])
+    state[0]=1
+    time.sleep(time_out)    
 #---------------------------------------------------------------------------------
 
 def relay_logging():
@@ -152,10 +156,10 @@ if not relay_number:
     relay_number = 0
 
 if relay_state_set == 0:
-    relay_off(serial_port, relay_number, state, 1)
+    relay_off(serial_port, relay_number, state, time_out)
    
 elif relay_state_set == 1:
-    relay_on(serial_port, relay_number, state, 1)
+    relay_on(serial_port, relay_number, state, time_out)
     
 if not time_out:
     time_out = 1
