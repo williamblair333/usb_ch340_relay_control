@@ -6,7 +6,7 @@
 #File:      ch340_relay_tty_control.py
 #Date:      2022SEP29
 #Author:    William Blair
-#Contact:   william.blair@enersys.com
+#Contact:   williamblair333@gmail.com
 #Tested on: Debian GNU/Linux 11
 #This script is intended to do the following:
 #-Control relay from terminal adhoc style or via an input file.  The input file 
