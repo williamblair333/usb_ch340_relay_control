@@ -3,14 +3,9 @@ Python USB ch340 relay control.
 Modified from: https://github.com/Brasme/usb_ch340_4x_relay_control/blob/main/ch340_relay_control.py  
 Bent Gramdal, Feb. 2021  
 
+Tested on: Debian GNU/Linux 11  
 This script is intended to do the following:  
-  
-Connect to specified USB CH340 COM Port and modify its relay using a file.  The file will switch the relay state on a timer in seconds supplied in the file.  The script will loop until EOF.  
-  
-The pyserial library is required! --> https://pyserial.readthedocs.io/en/latest/pyserial.html#installation.  python3 -m pip install pyserial  
-  
-You may want to check if the serial library is installed.  If it is, remove it.
-  
-TODO:  Add parser so we can input all variables on the commandline  
-TODO:  Add OS detection and integrate Linux functionality  
-  
+Control relay from terminal adhoc style or via an input file.  The input file method can control whichever relay specified along with a time period to remain opened or closed. Example relay 1 ON for 2 seconds = 1,2  
+TODO: Test on Windows 10  
+    
+The pyserial library is required! --> https://pyserial.readthedocs.io/en/latest/pyserial.html#installation.  Remove serial and add pyserial:  python3 -m pip unstall serial && python3 -m pip install pyserial
