@@ -2,7 +2,8 @@
 #READ THE COMMENTS BEFORE RUNNING
 #Modified from: https://github.com/Brasme/usb_ch340_4x_relay_control/blob/main/ch340_relay_control.py
 #Bent Gramdal, Feb. 2021
-#Run:	    python3 -m ch340_relay_tty_control -s '/dev/ttyUSB10' -r 1 -t 5 -f playfile.txt
+#Run:	    python3 -m ch340_relay_tty_control -d '/dev/ttyUSB10' -r 1 -t 5 -f playfile.txt
+#Run:	    python3 -m ch340_relay_tty_control -d COM1 -b 9600 -r 1 -t 1 -f playfile.txt
 #File:      ch340_relay_tty_control.py
 #Date:      2022SEP29
 #Author:    William Blair
