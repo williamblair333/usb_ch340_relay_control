@@ -1,0 +1,5 @@
+python relay_control.py -d COM3 -b 115200 -r 1 -s 1 -t 30
+python relay_control.py -d COM3 -b 115200 -r 1 -s 0 -t 10
+python relay_control.py -d COM3 -b 115200 -r 2 -s 1 -t 20
+python relay_control.py -d COM3 -b 115200 -r 2 -s 0 -t 15
+python relay_control.py -d COM3 -b 115200 -r 1 -s 1 -t 25
