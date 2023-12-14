@@ -27,7 +27,7 @@ Example: '1,2' turns relay 1 on for 2 seconds.
 
 Author: William Blair
 Contact: williamblair333@gmail.com
-Date: 2022SEP29
+Date: 2022SEP29, updated on 2023DEC13
 Original Source: Modified from Brasme's implementation (Feb. 2021)
 Source URL: https://github.com/Brasme/usb_ch340_4x_relay_control/blob/main/ch340_relay_control.py
 
