@@ -1,8 +1,11 @@
 """
+====================================================================================================
 Relay Control Script (relay_control.py)
 
 Description:
-This script provides functionality for controlling relay modules via a serial interface. It supports ad-hoc command line control and automated control via an input file. The script can toggle individual relays on or off for specified durations.
+This script provides functionality for controlling relay modules via a serial interface. It supports 
+ad-hoc command line control and automated control via an input file. The script can toggle individual 
+relays on or off for specified durations.
 
 Usage Examples:
 - Command line (Linux): python3 relay_control.py -d '/dev/ttyUSB0' -r 1 -t 5
@@ -29,18 +32,20 @@ Original Source: Modified from Brasme's implementation (Feb. 2021)
 Source URL: https://github.com/Brasme/usb_ch340_4x_relay_control/blob/main/ch340_relay_control.py
 
 Tested On:
-- Debian GNU/Linux 11
-- Windows 10 (testing in progress)
+- Debian GNU/Linux 11+
+- Windows 10+
 
 Notes:
-- Requires pyserial package. Install using 'pip install pyserial'.
-- Ensure proper permissions for serial port access on Linux systems.
+- Requires pyserial package. Remove serial if installed. 
+- python3 -m pip uninstall serial && python3 -m pip install pyserial
+- https://pyserial.readthedocs.io/en/latest/pyserial.html#installation.  Remove serial and add pyserial:  
+- Ensure proper permissions for serial port access on Windows / Linux systems.
 
 TODO:
-- Complete testing on Windows 10.
 
 Disclaimer:
 This script is provided "as is", without warranty of any kind. Use at your own risk.
+====================================================================================================
 """
 
 import argparse
