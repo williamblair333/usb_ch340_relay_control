@@ -1,16 +1,21 @@
 """
+====================================================================================================
 Command Runner Script (run_commands.py)
 
 Description:
-This script is designed to automate the execution of a series of commands listed in a specified file. It can execute the commands a specified number of times or continuously in an infinite loop. This script is particularly useful for repetitive tasks, such as testing or automation sequences.
+This script is designed to automate the execution of a series of commands listed in a specified file. 
+It can execute the commands a specified number of times or continuously in an infinite loop. This 
+script is particularly useful for repetitive tasks, such as testing or automation sequences.
 
 Usage:
 1. Finite number of cycles: python run_commands.py commands.txt 10
 2. Infinite execution: python run_commands.py commands.txt infinite
 
 Arguments:
-- file: The filename containing the list of commands to be executed. Each command should be on a separate line.
-- cycles: The number of times the command list should be executed. Specify an integer for finite execution or 'infinite' for continuous execution.
+- file: The filename containing the list of commands to be executed. Each command should be on a 
+  separate line.
+- cycles: The number of times the command list should be executed. Specify an integer for finite 
+  execution or 'infinite' for continuous execution.
 
 Example File Format:
 Each line in 'commands.txt' should contain a single command to be executed.
@@ -19,15 +24,19 @@ Example:
     python relay_control.py -d COM3 -b 115200 -r 1 -s 0 -t 10
 
 Notes:
-- Ensure that the commands in the file are compatible with the operating system and environment where the script is run.
-- The script uses Python's subprocess module for command execution, which should be used with caution to avoid security risks, especially when executing commands from untrusted sources.
+- Ensure that the commands in the file are compatible with the operating system and environment where 
+  the script is run.
+- The script uses Python's subprocess module for command execution, which should be used with caution 
+  to avoid security risks, especially when executing commands from untrusted sources.
 
 Author: William Blair
 Contact: williamblair333@gmail.com
 Date: 2023DEC13
 
 Disclaimer:
-This script is provided "as is", without warranty of any kind. Use at your own risk. The author is not responsible for any damage or loss resulting from the use of this script.
+This script is provided "as is", without warranty of any kind. Use at your own risk. The author is 
+not responsible for any damage or loss resulting from the use of this script.
+====================================================================================================
 """
 
 import argparse
