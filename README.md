@@ -8,4 +8,4 @@ This script is intended to do the following:
 Control relay from terminal adhoc style or via an input file.  The input file method can control whichever relay specified along with a time period to remain opened or closed. Example relay 1 ON for 2 seconds = 1,2  
 TODO: Test on Windows 10  
     
-The pyserial library is required! --> https://pyserial.readthedocs.io/en/latest/pyserial.html#installation.  Remove serial and add pyserial:  python3 -m pip unstall serial && python3 -m pip install pyserial
+The pyserial library is required! --> https://pyserial.readthedocs.io/en/latest/pyserial.html#installation.  Remove serial and add pyserial:  python3 -m pip uninstall serial && python3 -m pip install pyserial
