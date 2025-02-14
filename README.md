@@ -1,4 +1,5 @@
 # Relay Control and Command Runner Scripts
+<img src="CH340_relay_race.png" alt="CH340 Relay Race" width="600">
 
 This repository contains two Python scripts for controlling relay modules and automating command execution. The `relay_control.py` script is used for controlling relays via a serial interface, while `run_commands.py` automates the execution of a series of commands from a file.
 
