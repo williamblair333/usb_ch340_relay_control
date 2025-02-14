@@ -28,9 +28,23 @@ This script provides functionality for controlling relay modules via a serial in
 
 ### Usage Examples
 
-- Command line (Linux): `python3 relay_control.py -d '/dev/ttyUSB0' -r 1 -t 5`
-- Command line (Windows): `python relay_control.py -d COM1 -b 9600 -r 1 -t 1`
-- With input file: `python relay_control.py -f playfile.txt`
+- Command line (Linux):
+
+````sh
+python3 relay_control.py -d '/dev/ttyUSB0' -r 1 -t 5
+````
+
+- Command line (Windows):
+
+````sh
+python relay_control.py -d COM1 -b 9600 -r 1 -t 1
+````
+
+- With input file:
+
+````sh
+python relay_control.py -f playfile.txt
+````
 
 ## run_commands.py
 
@@ -44,36 +58,66 @@ A script to automate the execution of a series of commands listed in a specified
 
 ### Usage Examples
 
-- Finite number of cycles: `python run_commands.py commands.txt 10`
-- Infinite execution: `python run_commands.py commands.txt infinite`
+- Finite number of cycles:
+
+````sh
+python run_commands.py commands.txt 10
+````
+
+- Infinite execution:
+
+````sh
+python run_commands.py commands.txt infinite
+````
 
 ## Installation
 
+### Do This First
+Save yourself a lot of headache. Let's use `/dev/ttyUSB0` as the reference CH340 device:
+
+````sh
+# Disconnect USB device if connected
+sudo systemctl mask brltty-udev.service
+sudo apt-get remove --yes brltty
+# Reconnect USB device if disconnected
+sudo chmod 0666 /dev/ttyUSB0
+````
+
+We test everything in Ubuntu (currently 22.04). For Windows, you’d probably need to run as Administrator.
+
+### Download The Source
 To use these scripts, clone this repository or download the scripts directly. Ensure Python 3 is installed on your system.
 
+````sh
 git clone https://github.com/your-repository/relay-automation.git
 cd relay-automation
-
-Install the required Python package:
-
+pip uninstall serial
 pip install pyserial
+````
 
 ## Usage
-relay_control.py
+
+### relay_control.py
 
 Run the script with the required arguments. For example:
 
+````sh
 python relay_control.py -d COM1 -b 9600 -r 1 -t 1
+````
 
-run_commands.py
+### run_commands.py
 
-Create a file (e.g., commands.txt) with each command on a new line and run the script:
+Create a file (e.g., `commands.txt`) with each command on a new line and run the script:
 
+````sh
 python run_commands.py commands.txt 10
+````
 
 For infinite execution:
 
+````sh
 python run_commands.py commands.txt infinite
+````
 
 ## Disclaimer
 
@@ -81,8 +125,7 @@ These scripts are provided "as is", without warranty of any kind. Use at your ow
 
 ## Author
 
-    Name: William Blair
-    Contact: Create an Issue
-
-This README provides a complete and comprehensive guide for both the `relay_control.py` and `run_commands.py` scripts, including their features, usage examples, installation instructions, and disclaimer. Please replace `[Your Name]`, `[Your Email]`, and the repository URL with your actual details.
-
+````
+Name: William Blair  
+Contact: Create an Issue
+`
