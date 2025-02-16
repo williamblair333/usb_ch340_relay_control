@@ -3,8 +3,8 @@
 Relay Control Script (relay_control.py)
 
 Description:
-This script provides functionality for controlling relay modules via a serial interface. It supports
-ad-hoc command line control and automated control via an input file. The script can toggle individual
+This script provides functionality for controlling relay modules via a serial interface. It supports 
+ad-hoc command line control and automated control via an input file. The script can toggle individual 
 relays on or off for specified durations.
 
 Usage Examples:
@@ -19,6 +19,7 @@ Arguments:
 - -t (--timeout): Duration in seconds to keep the relay in the set state.
 - -f (--file): Input file for automated relay control.
 - -v (--verbose): Enable verbose mode for debugging output.
+- -i (--info): Get information regarding the device and exit.
 
 File Format (for automated control):
 Each line in the input file should contain two comma-separated values:
@@ -37,9 +38,9 @@ Tested On:
 - Windows 10+
 
 Notes:
-- Requires pyserial package. Remove serial if installed.
+- Requires pyserial package. Remove serial if installed. 
 - python3 -m pip uninstall serial && python3 -m pip install pyserial
-- https://pyserial.readthedocs.io/en/latest/pyserial.html#installation.  Remove serial and add pyserial:
+- https://pyserial.readthedocs.io/en/latest/pyserial.html#installation.  Remove serial and add pyserial:  
 - Ensure proper permissions for serial port access on Windows / Linux systems.
 
 TODO:
@@ -63,7 +64,7 @@ class RelayController:
         self.stop_thread = False  # Flag to stop the read thread gracefully
         self.verbose = verbose
         try:
-            self.serial_port = serial.Serial(port, baud, timeout=.1)  # Added timeout for non-blocking read
+            self.serial_port = serial.Serial(port, baudrate=baud, timeout=0.05, write_timeout=0.1)  # Added write_timeout
             if not self.serial_port.is_open:
                 raise serial.SerialException("Failed to open the serial port.")
             self.state = [0] * 8
@@ -127,8 +128,10 @@ class RelayController:
             with self.lock:  # Ensure thread-safe access to the serial port
                 self.debug(f"Setting relay {relay_number+1} to {'ON' if on else 'OFF'} for {time_out} seconds.")
                 self.serial_port.write(msg)
+                time.sleep(0.1)  # Give the relay time to process
             self.state[relay_number] = 1 if on else 0
-            time.sleep(max(0.1, time_out))  # Ensure minimum 0.1 second timeout
+            if time_out > 0:
+                time.sleep(time_out)
         except Exception as e:
             self.debug(f"Error sending command to port: {e}")
 
@@ -162,6 +165,7 @@ def setup_logging():
     logging.basicConfig(filename='relay.log', encoding='utf-8', level=logging.DEBUG,
                         format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description='Relay Control Script')
     parser.add_argument('-d', '--device', required=True, help='Device /dev/ttyUSB or COM port.')
@@ -173,6 +177,7 @@ def parse_args():
     parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose mode for debugging output.')
     parser.add_argument('-i', '--info', action='store_true', help='Get information regarding the device and exit.')
     return parser.parse_args()
+
 
 def main():
     args = parse_args()
@@ -192,6 +197,7 @@ def main():
         controller.execute_from_file(args.file)
 
     controller.close()
+
 
 if __name__ == "__main__":
     main()
