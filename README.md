@@ -1,133 +1,264 @@
-# Relay Control and Command Runner Scripts
-<img src="CH340_relay_race.png" alt="CH340 Relay Race" style="width:50%;">
+# ⚡  qr-forge
+![License: GPL-3.0](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![Python 3.12](https://img.shields.io/badge/Python-3.12-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-backend-009688)
+![Dockerized](https://img.shields.io/badge/Docker-Debian--slim-informational)
+
+![qrforge screenshot](./screenshot.png)
 
 
-This repository contains two Python scripts for controlling relay modules and automating command execution. The `relay_control.py` script is used for controlling relays via a serial interface, while `run_commands.py` automates the execution of a series of commands from a file.
+### Self-hosted WiFi & text QR code generator (FastAPI, Docker, Debian)
 
-## Contents
+Generate WiFi QR codes (WPA/WPA2, nopass) and text/URL QR codes via a FastAPI backend, Debian-slim Docker image, and responsive dark web UI for local or cloud deployments.
 
-1. [relay_control.py](#relay_controlpy)
-2. [run_commands.py](#run_commandspy)
-3. [Installation](#installation)
-4. [Usage](#usage)
-5. [Disclaimer](#disclaimer)
-6. [Author](#author)
 
-## relay_control.py
 
-This script provides functionality for controlling relay modules via a serial interface. It supports ad-hoc command-line control and automated control via an input file.
+---
 
-### Features
+# ✨ Features
 
-- Control individual relays on/off for specified durations
-- Read relay control sequences from an input file for automation
-- Command line based, easy to integrate with other systems
+```
+▸ /       → Beautiful HTML UI (dark mode)
+▸ /qr     → PNG API endpoint
+▸ Debian  → python:3.12-slim-bookworm
+▸ Docker  → Fully isolated dependency stack
+▸ Cloud   → Identical behavior across all environments
+```
 
-### Requirements
+---
 
-- Python 3
-- pyserial package
+# 🧩 Architecture Overview
 
-### Usage Examples
+```
+qrforge
+│
+├── app/
+│   ├── main.py         # FastAPI server + routing
+│   ├── __init__.py
+│   └── templates/
+│       └── index.html  # Dark UI template
+│
+├── Dockerfile          # Debian-slim base container
+├── docker-compose.yml  # Production-ready service definition
+├── requirements.txt
+└── README.md
+```
 
-- Command line (Linux):
+---
 
-````sh
-python3 relay_control.py -d '/dev/ttyUSB0' -r 1 -t 5
-````
+# 🚀 Quick Start — docker compose (recommended)
 
-- Command line (Windows):
+### Start the stack
+```bash
+docker compose up --build --detach
+```
 
-````sh
-python relay_control.py -d COM1 -b 9600 -r 1 -t 1
-````
+### Check status
+```bash
+docker compose ps
+```
 
-- With input file:
+### Open the UI
+```bash
+http://localhost:8002/
+```
 
-````sh
-python relay_control.py -f playfile.txt
-````
+### Stop the service
+```bash
+docker compose down
+```
 
-## run_commands.py
+---
 
-A script to automate the execution of a series of commands listed in a specified file. It can execute the commands a specified number of times or continuously in an infinite loop.
+# 🚀 Quick Start — docker run
 
-### Features
+### Build
+```bash
+docker build --tag qrforge:1.0.0 .
+```
 
-- Execute commands from a file
-- Supports finite or infinite execution cycles
-- Useful for repetitive tasks and automation
+### Run
+```bash
+docker run   --rm   --name qrforge   --publish 8002:8002   qrforge:1.0.0
+```
 
-### Usage Examples
+### Visit
+```bash
+http://localhost:8002/
+```
 
-- Finite number of cycles:
+Stop:
+```bash
+docker stop qrforge
+```
 
-````sh
-python run_commands.py commands.txt 10
-````
+---
 
-- Infinite execution:
+# 🎨 HTML UI
 
-````sh
-python run_commands.py commands.txt infinite
-````
+A minimal zero-learning-curve interface.
 
-## Installation
+```
+▸ Enter text/URL
+▸ Adjust scale & border
+▸ Generate QR
+▸ Save
+```
 
-### Do This First
-Save yourself a lot of headache. Let's use `/dev/ttyUSB0` as the reference CH340 device:
+Open it:
 
-````sh
-# Disconnect USB device if connected
-sudo systemctl mask brltty-udev.service
-sudo apt-get remove --yes brltty
-# Reconnect USB device if disconnected
-sudo chmod 0666 /dev/ttyUSB0
-````
+```bash
+http://localhost:8002/
+```
 
-We test everything in Ubuntu (currently 22.04). For Windows, you’d probably need to run as Administrator.
+---
 
-### Download The Source
-To use these scripts, clone this repository or download the scripts directly. Ensure Python 3 is installed on your system.
+# 📡 API Reference — GET /qr
 
-````sh
-git clone https://github.com/your-repository/relay-automation.git
-cd relay-automation
-pip uninstall serial
-pip install pyserial
-````
+### Parameters
+```bash
+data   (required)  → string to encode
+scale  (optional)  → default 5
+border (optional)  → default 4
+```
 
-## Usage
+### Basic example
+```bash
+curl --get   --data-urlencode "data=https://example.com"   http://localhost:8002/qr   --output qr.png
+```
 
-### relay_control.py
+### Custom QR
+```bash
+curl --get   --data-urlencode "data=Hello qrforge"   --data "scale=10"   --data "border=2"   http://localhost:8002/qr   --output qr_custom.png
+```
 
-Run the script with the required arguments. For example:
+---
 
-````sh
-python relay_control.py -d COM1 -b 9600 -r 1 -t 1
-````
+# 🧠 Internals
 
-### run_commands.py
+### FastAPI + segno
+```
+FastAPI   → Web server, routing, HTML rendering
+segno     → High-accuracy QR generation
+uvicorn   → High-performance ASGI server
+```
 
-Create a file (e.g., `commands.txt`) with each command on a new line and run the script:
+### Flow
+```
+HTML → User inputs
+main.py → Validates & builds QR
+segno → Generates PNG in-memory
+Response → image/png
+```
 
-````sh
-python run_commands.py commands.txt 10
-````
+Zero disk writes. Zero temp files.
 
-For infinite execution:
+---
 
-````sh
-python run_commands.py commands.txt infinite
-````
+# ⚙️ Config
 
-## Disclaimer
+### Default port
+```bash
+8002
+```
 
-These scripts are provided "as is", without warranty of any kind. Use at your own risk. The author is not responsible for any damage or loss resulting from the use of these scripts.
+### Change port
+Edit Dockerfile CMD + docker-compose.yml → then rebuild.
 
-## Author
+---
 
-````
-Name: William Blair  
-Contact: Create an Issue
-`
+# ☁️ Cloud Deployment Strategy
+
+### VM (Debian recommended)
+```bash
+docker compose up --build --detach
+```
+Expose **8002** → Access externally.
+
+### Managed container environments
+```
+Build → Push → Deploy → Map port 8002 → Done
+```
+
+Stateless → horizontally scalable instantly.
+
+---
+
+# 📊 Logs
+
+```bash
+docker compose logs qrforge
+docker logs qrforge
+```
+
+---
+
+# 🛠 Troubleshooting
+
+### Service not starting
+```bash
+docker compose logs qrforge
+```
+
+### Nothing at :8002
+```bash
+docker compose ps
+```
+
+### QR too dense
+```bash
+scale=10
+border=4
+```
+
+---
+
+# 🔧 Dev Workflow
+
+```bash
+git init
+git add .
+git commit -m "Initial qrforge implementation"
+
+git remote add origin git@your.git/qrforge.git
+git push --set-upstream origin main
+```
+
+Feature branches:
+
+```bash
+git checkout -b feature/update-ui
+```
+
+---
+
+# 🏷️ Possible Enhancements (future)
+
+- 🔒 Optional password protection
+- 🌓 Light/Dark theme toggle
+- 📦 Docker Hub automated builds
+- 📈 Health endpoints
+- 📜 QR history log
+- 🖼️ SVG output
+
+---
+
+# ⚠️ License
+
+This work is licensed under the GNU General Public License version 3. See `LICENSE`.
+
+---
+# ⚠️ Disclaimer
+
+Software is provided **AS‑IS**.
+Production security posture is **your** responsibility.
+
+---
+
+### Keywords
+
+qr, qr code, qr-code, qr-generator, wifi qr, wifi-qr, wifi password qr,
+wpa qr, wpa-qr, wifi qrcode, self-hosted qr, fastapi qr, docker qr,
+debian qr code generator, web qr generator, local-first qr service
+---
+# ✔️ End of File
